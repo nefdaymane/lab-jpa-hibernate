@@ -8,4 +8,14 @@ public class LigneCommandeService extends AbstractFacade<LigneCommandeProduit, C
     public LigneCommandeService() {
         super(LigneCommandeProduit.class);
     }
+
+    @Override
+    public boolean create(LigneCommandeProduit entity) {
+
+        if (entity.getProduit() == null || entity.getCommande() == null) {
+            return false;
+        }
+
+        return super.create(entity);
+    }
 }

@@ -11,10 +11,11 @@
                     query = "from Produit p where p.reference = :reference"
             ),
             @NamedQuery(
-                    name = "findByCategory", query = "SELECT p from Produit p where p.categorie = :categorie"
+                    name = "Produit.findByCategory",
+                    query = "select p from Produit p where p.categorie.id = :id"
             ),
             @NamedQuery(
-                    name = "findBetweenDates",
+                    name = "Produit.findBetweenDates",
                     query = "select distinct p " +
                             "from Produit p " +
                             "join p.ligneCommandeProduits l " +
@@ -22,6 +23,7 @@
                             "where c.date between :d1 and :d2"
             )
     })
+
     public class Produit {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

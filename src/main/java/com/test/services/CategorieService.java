@@ -5,7 +5,7 @@ import com.test.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-public class CategorieService extends AbstractFacade<Categorie,Integer>{
+public class CategorieService extends AbstractFacade<Categorie, Integer> {
 
     public CategorieService() {
         super(Categorie.class);
@@ -14,25 +14,27 @@ public class CategorieService extends AbstractFacade<Categorie,Integer>{
     @Override
     public boolean create(Categorie entity) {
 
-        entity = findByCode(entity.getCode());
+        Categorie existingCategorie = findByCode(entity.getCode());
 
-        if(entity != null){
+        if (existingCategorie != null) {
             return false;
         }
 
         return super.create(entity);
     }
 
-    public Categorie findByCode(String code){
+    public Categorie findByCode(String code) {
         Session session = null;
         Categorie categorie = null;
-        try{
+
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            categorie = session.createQuery("from Categorie c where c.code = :code",Categorie.class)
-                    .setParameter("code",code).uniqueResult();
-        }catch (HibernateException e){
+
+            categorie = (Categorie) session.getNamedQuery("findByCode").setParameter("code",code).uniqueResult();
+
+        } catch (HibernateException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
@@ -40,4 +42,18 @@ public class CategorieService extends AbstractFacade<Categorie,Integer>{
 
         return categorie;
     }
+
+    @Override
+    public boolean update(Categorie entity) {
+
+        Categorie existingCategorie = findById(entity.getId());
+
+        if (existingCategorie == null) {
+            return false;
+        }
+
+        return super.update(entity);
+    }
+
+
 }

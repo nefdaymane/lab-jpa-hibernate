@@ -1,5 +1,7 @@
 package com.test;
 
+import com.test.test.CategorieTest;
+import com.test.test.ProduitTest;
 import com.test.util.HibernateUtil;
 import org.hibernate.Session;
 
@@ -7,8 +9,7 @@ import org.hibernate.Session;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
+/*
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             Object r = session.createNativeQuery("SELECT 1").getSingleResult();
@@ -18,6 +19,15 @@ public class Main {
             e.printStackTrace();
         }finally {
             HibernateUtil.shutdown();
+        }
+
+
+ */
+        try{
+//            CategorieTest.run();
+            ProduitTest.run();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 }
