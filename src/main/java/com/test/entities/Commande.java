@@ -38,6 +38,14 @@ public class Commande {
         this.id = id;
     }
 
+    public List<LigneCommandeProduit> getLigneCommandeProduits() {
+        return ligneCommandeProduits;
+    }
+
+    public void setLigneCommandeProduits(List<LigneCommandeProduit> ligneCommandeProduits) {
+        this.ligneCommandeProduits = ligneCommandeProduits;
+    }
+
     @Override
     public String toString() {
         return "Commande{" + "id=" + id + ", date=" + date + '}';
