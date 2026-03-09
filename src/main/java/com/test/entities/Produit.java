@@ -21,6 +21,10 @@
                             "join p.ligneCommandeProduits l " +
                             "join l.commande c " +
                             "where c.date between :d1 and :d2"
+            ),
+            @NamedQuery(
+                    name = "Produit.findPrixSup",
+                    query = "select p from Produit p where p.prix > :prix"
             )
     })
 

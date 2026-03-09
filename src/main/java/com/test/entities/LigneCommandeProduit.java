@@ -4,6 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "lignecommandeproduits")
+@NamedQuery(
+        name = "LigneCommandeProduit.findByCommande",
+        query = "select l from LigneCommandeProduit l where l.commande.id = :id"
+)
 public class LigneCommandeProduit {
 
     @EmbeddedId

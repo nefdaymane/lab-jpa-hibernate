@@ -99,4 +99,26 @@ public class ProduitService extends AbstractFacade<Produit, Integer> {
 
         return list;
     }
+
+    public List<Produit> findPrixSuperieur(float prix) {
+
+        Session s = null;
+        List<Produit> list = null;
+
+        try {
+
+            s = HibernateUtil.getSessionFactory().openSession();
+
+            list = s.getNamedQuery("Produit.findPrixSup")
+                    .setParameter("prix", prix)
+                    .list();
+
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            if (s != null) s.close();
+        }
+
+        return list;
+    }
 }

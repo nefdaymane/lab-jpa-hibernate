@@ -14,13 +14,14 @@ public class ProduitTest {
     private static final ProduitService ps = new ProduitService();
 
     public static void run() {
-         testCreate();
+//         testCreate();
         // testFindByReference();
         // testFindByCategorie();
         // testUpdate();
         // testFindAll();
         // testDelete();
-        // testFindProduitsCommandesBetweenDates();
+//         testFindProduitsCommandesBetweenDates();
+        testPrixSuperieur();
     }
 
     public static void testCreate() {
@@ -115,21 +116,41 @@ public class ProduitTest {
         System.out.println("\n=== TEST FIND PRODUITS COMMANDES BETWEEN DATES ===");
 
         try {
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
             Date d1 = sdf.parse("2024-01-01");
             Date d2 = sdf.parse("2026-12-31");
 
+            System.out.println("Date début : " + d1);
+            System.out.println("Date fin   : " + d2);
+
             List<Produit> produits = ps.findProduitsCommandesBetweenDates(d1, d2);
 
-            if (produits != null && !produits.isEmpty()) {
-                for (Produit p : produits) {
-                    System.out.println(p);
-                }
-            } else {
+            if (produits == null || produits.isEmpty()) {
                 System.out.println("Aucun produit trouvé entre ces dates.");
+                return;
             }
+
+            System.out.println("Produits trouvés :");
+
+            for (Produit p : produits) {
+                System.out.println(p);
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void testPrixSuperieur() {
+
+        System.out.println("\n=== TEST PRODUITS PRIX > 100 ===");
+
+        List<Produit> produits = ps.findPrixSuperieur(100);
+
+        for (Produit p : produits) {
+            System.out.println(p);
         }
     }
 }

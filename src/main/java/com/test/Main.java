@@ -1,6 +1,7 @@
 package com.test;
 
 import com.test.test.CategorieTest;
+import com.test.test.CommandeTest;
 import com.test.test.ProduitTest;
 import com.test.util.HibernateUtil;
 import org.hibernate.Session;
@@ -26,6 +27,7 @@ public class Main {
         try{
 //            CategorieTest.run();
             ProduitTest.run();
+//            CommandeTest.run();
         }catch(Exception e){
             e.printStackTrace();
         }

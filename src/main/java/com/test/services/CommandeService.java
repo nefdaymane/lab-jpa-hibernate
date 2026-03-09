@@ -3,6 +3,9 @@ package com.test.services;
 import com.test.entities.Commande;
 import com.test.entities.CommandeProduitPk;
 import com.test.entities.LigneCommandeProduit;
+import com.test.entities.Produit;
+
+import java.util.List;
 
 public class CommandeService extends AbstractFacade<Commande, Integer> {
 
@@ -85,14 +88,53 @@ public class CommandeService extends AbstractFacade<Commande, Integer> {
     @Override
     public boolean delete(Commande entity) {
 
-        if (entity.getLigneCommandeProduits() != null) {
-            for (LigneCommandeProduit ligne : entity.getLigneCommandeProduits()) {
+        Commande existingCommande = findById(entity.getId());
+
+        if (existingCommande == null) {
+            return false;
+        }
+
+        if (existingCommande.getLigneCommandeProduits() != null) {
+            for (LigneCommandeProduit ligne : existingCommande.getLigneCommandeProduits()) {
                 if (!lcs.delete(ligne)) {
                     return false;
                 }
             }
         }
 
-        return super.delete(entity);
+        Commande commandeToDelete = new Commande();
+        commandeToDelete.setId(existingCommande.getId());
+
+        return super.delete(commandeToDelete);
     }
+
+    public void afficherProduitsCommande(int commandeId) {
+
+        Commande commande = findById(commandeId);
+
+        if (commande == null) {
+            System.out.println("Commande introuvable");
+            return;
+        }
+
+        List<LigneCommandeProduit> lignes = lcs.findByCommande(commandeId);
+
+        System.out.println("Commande : " + commande.getId() +
+                "    Date : " + commande.getDate());
+
+        System.out.println("Liste des produits :");
+        System.out.println("Reference   Prix   Quantite");
+
+        for (LigneCommandeProduit l : lignes) {
+
+            Produit p = l.getProduit();
+
+            System.out.println(
+                    p.getReference() + "      " +
+                            p.getPrix() + " DH      " +
+                            l.getQuantite()
+            );
+        }
+    }
+
 }
